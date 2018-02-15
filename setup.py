@@ -4,6 +4,7 @@ except ImportError:
     from distutils.core import setup
 
 import subprocess
+import sys
 
 # If pandoc is available, convert the markdown README to REstructured Text.
 try:
@@ -11,6 +12,8 @@ try:
                               stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE)
     long_description, _ = pandoc.communicate()
+    if sys.version_info[0] >= 3:
+        long_description = str(long_description, "utf-8")
 except OSError:
     long_description = None
 
